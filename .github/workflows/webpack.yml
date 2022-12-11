@@ -26,3 +26,70 @@ jobs:
       run: |
         npm install
         npx webpack
+- ad: Java JDK Kurulumu
+  kullanımlar: action/setup-java@v3.8.0
+  ile birlikte:
+    # Ayarlanacak Java sürümü. Tam veya semver Java sürümünü alır. README dosyasında desteklenen sözdizimi örneklerine bakın
+    java sürümü:
+    # Java dağıtımı. README dosyasındaki desteklenen dağıtımların listesine bakın
+    dağıtım:
+    # Paket türü (jdk, jre, jdk+fx, jre+fx)
+    java paketi: # isteğe bağlı, varsayılan jdk'dir
+    # Paketin mimarisi (varsayılan olarak action runner'ın mimarisine göredir)
+    mimari: # isteğe bağlı
+    # Sıkıştırılmış JDK'nın bulunduğu yerin yolu
+    jdkFile: # isteğe bağlı
+    # Eylemin, sürüm spesifikasyonunu karşılayan mevcut en son sürümü kontrol etmesini istiyorsanız bu seçeneği ayarlayın
+    en son kontrol: # isteğe bağlı
+    # pom.xml dosyasındaki DistributionManagement havuzunun kimliği. Varsayılan "github"
+    sunucu kimliği: # isteğe bağlı, varsayılan github'dur
+    # Apache Maven deposunda kimlik doğrulama için kullanıcı adı için ortam değişkeni adı. Varsayılan $GITHUB_ACTOR'dur
+    sunucu-kullanıcı adı: # isteğe bağlı, varsayılan GITHUB_ACTOR
+    # Apache Maven deposunda kimlik doğrulaması için parola veya belirteç için ortam değişkeni adı. Varsayılan $GITHUB_TOKEN'dir
+    sunucu şifresi: # isteğe bağlı, varsayılan GITHUB_TOKEN'dir
+    # settings.xml dosyasının yazılacağı yol. Varsayılan ~/.m2'dir.
+    ayarlar yolu: # isteğe bağlı
+    # Varsa settings.xml dosyasının üzerine yazın. Varsayılan "true"dur.
+    üzerine yazma ayarları: # isteğe bağlı, varsayılan doğrudur
+    # İçe aktarılacak GPG özel anahtarı. Varsayılan boş dizedir.
+    gpg-private-key: # isteğe bağlı
+    # GPG özel anahtar parolası için ortam değişkeni adı. Varsayılan $GPG_PASSPHRASE'dir.
+    gpg parolası: # isteğe bağlı
+    # Bağımlılıkları önbelleğe almak için derleme platformunun adı. "maven", "gradle" veya "sbt" olabilir.
+    önbellek: # isteğe bağlı
+    # İş durumunu iş adımına geçirmek için geçici çözüm. Bu değişken manuel ayar için tasarlanmamıştır
+    iş durumu: # isteğe bağlı, varsayılan değer ${{ job.status }}
+    # Microsoft Build of OpenJDK için olduğu gibi, github.com'da barındırılan sürüm bildirimlerini alırken kimlik doğrulaması yapmak için kullanılan belirteç. Bu eylemi github.com'da çalıştırırken, varsayılan değer yeterlidir. GHES üzerinde çalışırken, hız sınırlaması yaşıyorsanız github.com için kişisel bir erişim belirteci iletebilirsiniz.
+    belirteç: # isteğe bağlı, varsayılan ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Varsayılan "${distribution}_${java-version}" adı istenmiyorsa, Maven Toolchain Kimliğinin adı. Gelişmiş Kullanım dosyasında desteklenen sözdizimi örneklerine bakın
+    mvn-toolchain-id: # isteğe bağlı
+    # Varsayılan "${distribution}" adı istenmiyorsa, Maven Toolchain Satıcısının adı. Gelişmiş Kullanım dosyasında desteklenen sözdizimi örneklerine bakın
+    mvn-toolchain-vendor: # isteğe bağlı
+    
+    - name: Cache
+  uses: actions/cache@v3.1.0-beta.2
+  with:
+    # A list of files, directories, and wildcard patterns to cache and restore
+    path: 
+    # An explicit key for restoring and saving the cache
+    key: 
+    # An ordered list of keys to use for restoring stale cache if no cache hit occurred for key. Note `cache-hit` returns false in this case.
+    restore-keys: # optional
+    # The chunk size used to split up large files during upload, in bytes
+    upload-chunk-size: # optional
+    
+    - name: Setup .NET Core SDK
+  uses: actions/setup-dotnet@v3.0.3
+  with:
+    # Optional SDK version(s) to use. If not provided, will install global.json version when available. Examples: 2.2.104, 3.1, 3.1.x, 3.x
+    dotnet-version: # optional
+    # Optional quality of the build. The possible values are: daily, signed, validated, preview, ga.
+    dotnet-quality: # optional
+    # Optional global.json location, if your global.json isn't located in the root of the repo.
+    global-json-file: # optional
+    # Optional package source for which to set up authentication. Will consult any existing NuGet.config in the root of the repo and provide a temporary NuGet.config using the NUGET_AUTH_TOKEN environment variable as a ClearTextPassword
+    source-url: # optional
+    # Optional OWNER for using packages from GitHub Package Registry organizations/users other than the current repository's owner. Only used if a GPR URL is also provided in source-url
+    owner: # optional
+    # Optional NuGet.config location, if your NuGet.config isn't located in the root of the repo.
+    config-file: # optional
